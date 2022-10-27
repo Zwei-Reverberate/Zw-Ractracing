@@ -37,10 +37,11 @@ class Metal : public Material
 {
 public:
 	color albedo;
+	double fuzz;
 
 public:
 	Metal();
-	Metal(const color& a);
+	Metal(const color& a, double f);
 	virtual bool scatter
 	(
 		const Ray& r_in,
@@ -48,6 +49,32 @@ public:
 		color& attenuation,
 		Ray& scattered
 	) const override;
+};
+
+class Dielectric : public Material
+{
+public:
+	double ir; // Index of Refraction
+
+public:
+	Dielectric();
+	Dielectric(double index_of_refraction);
+	virtual bool scatter
+	(
+		const Ray& r_in,
+		const hit_record& rec,
+		color& attenuation,
+		Ray& scattered
+	) const override;
+
+private:
+	static double reflectance(double cosine, double ref_idx) 
+	{
+		// Use Schlick's approximation for reflectance.
+		auto r0 = (1 - ref_idx) / (1 + ref_idx);
+		r0 = r0 * r0;
+		return r0 + (1 - r0) * pow((1 - cosine), 5);
+	}
 };
 
 #endif

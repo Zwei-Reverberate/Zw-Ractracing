@@ -38,15 +38,17 @@ void ZwApp::imgSetting()
 	camera = Camera(point3(0, 0, 0), point3(0, 0, -1), vec3(0, 1, 0), 90, aspect_ratio);
 
 	auto material_ground = std::make_shared<Lambertian>(color(0.8, 0.8, 0.0));
-	auto material_center = std::make_shared<Lambertian>(color(0.7, 0.3, 0.3));
-	auto material_left = std::make_shared<Metal>(color(0.8, 0.8, 0.8));
-	auto material_right = std::make_shared<Metal>(color(0.8, 0.6, 0.2));
+	auto material_center = std::make_shared<Lambertian>(color(0.1, 0.2, 0.5));
+	auto material_left = std::make_shared<Dielectric>(1.5);
+	auto material_right = std::make_shared<Metal>(color(0.8, 0.6, 0.2), 1.0);
 
 
 	// 向屏幕空间中的物体列表中添加球体
 	world.add(std::make_shared<Sphere>(point3(0.0, -100.5, -1.0), 100.0, material_ground));
 	world.add(std::make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_center));
 	world.add(std::make_shared<Sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_left));
+	// 如果使用负半径，几何形状不受影响，但表面法线指向内部。这可以用作制造空心玻璃球的气泡
+	world.add(std::make_shared<Sphere>(point3(-1.0, 0.0, -1.0), -0.4, material_left));
 	world.add(std::make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));
 
 	for (int x = img.getHeight() - 1; x >= 0; --x)

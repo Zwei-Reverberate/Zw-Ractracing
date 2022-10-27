@@ -4,12 +4,6 @@ Sphere::Sphere()
 {
 }
 
-Sphere::Sphere(point3 cen, double r)
-{
-	center = cen;
-	radius = r;
-}
-
 Sphere::Sphere(point3 cen, double r, std::shared_ptr<Material> m)
 {
 	center = cen;

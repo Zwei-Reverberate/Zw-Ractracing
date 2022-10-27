@@ -8,7 +8,6 @@ public:
 	point3 center;
 	double radius;
 	Sphere();
-	Sphere(point3 cen, double r);
 	Sphere(point3 cen, double r, std::shared_ptr<Material> m);
 	std::shared_ptr<Material> mat_ptr;
 
