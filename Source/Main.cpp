@@ -6,7 +6,8 @@
 int main()
 {
 	ZwApp zw;
-	zw.imgSetting();
+	//zw.imgSetting();
+	zw.renderWithMultiThreads();
 	zw.renderLoop();
 	return 0;
 }
